@@ -34,48 +34,23 @@ var config = {
           database.ref().push(newTrain);
       })
   })
+ // database.ref().orderByChild("dateAdded").on("child_added" ,function(childSnapShot){
 
-  // Assume the following situations.
+  //})
 
-    // (TEST 1)
-    // First Train of the Day is 3:00 AM
-    // Assume Train comes every 3 minutes.
-    // Assume the current time is 3:16 AM....
-    // What time would the next train be...? (Use your brain first)
-    // It would be 3:18 -- 2 minutes away
-
-    // (TEST 2)
-    // First Train of the Day is 3:00 AM
-    // Assume Train comes every 7 minutes.
-    // Assume the current time is 3:16 AM....
-    // What time would the next train be...? (Use your brain first)
-    // It would be 3:21 -- 5 minutes away
-
-
-    // ==========================================================
-
-    // Solved Mathematically
-    // Test case 1:
-    // 16 - 00 = 16
-    // 16 % 3 = 1 (Modulus is the remainder)
-    // 3 - 1 = 2 minutes away
-    // 2 + 3:16 = 3:18
-
-    // Solved Mathematically
-    // Test case 2:
-    // 16 - 00 = 16
-    // 16 % 7 = 2 (Modulus is the remainder)
-    // 7 - 2 = 5 minutes away
-    // 5 + 3:16 = 3:21
+    //var name = childSnapShot.val().trainName
+    //var destination = childSnapShot.val().destination
+    //var firstTrain = childSnapShot.val().firstTrain
+   // var frequency = childSnapShot.val().frequency
 
     // Assumptions
-    var tFrequency = 3;
+    var frequency = 3;
 
     // Time is 3:30 AM
-    var firstTime = "03:30";
+    var firstTrainTime = "03:30";
 
     // First Time (pushed back 1 year to make sure it comes before current time)
-    var firstTimeConverted = moment(firstTime, "HH:mm").subtract(1, "years");
+    var firstTimeConverted = moment(firstTrainTime, "HH:mm").subtract(1, "years");
     console.log(firstTimeConverted);
 
     // Current Time
@@ -87,7 +62,7 @@ var config = {
     console.log("DIFFERENCE IN TIME: " + diffTime);
 
     // Time apart (remainder)
-    var tRemainder = diffTime % tFrequency;
+    var tRemainder = diffTime % frequency;
     console.log(tRemainder);
 
     // Minute Until Train
@@ -97,3 +72,13 @@ var config = {
     // Next Train
     var nextTrain = moment().add(tMinutesTillTrain, "minutes");
     console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
+
+    newRow.append("<td>"+moment(name).format("MM-DD-YYYY")+"</td>")//Start Date
+    newRow.append("<td>"+destination+"</td>")//Work Month
+    newRow.append("<td>"+firstTrain+"</td>")// Rate
+    newRow.append("<td>"+frequency+"</td>")//Bill
+    $("#employee-table").append(newRow)//Append to the table
+
+    var newRow = $("<tr>");//Create new Table Row
+    newRow.append("<td>"+destination+"</td>")//Name
+    newRow.append("<td>"+destination+"</td>")//Role
